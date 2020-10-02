@@ -13,7 +13,7 @@ desenvolvedores = [
         'habilidade': ['Python', 'Django']
     }
 ]
- 
+
 #recupera (pelo id), altera e deleta desenvolvedores
 @app.route('/dev/<int:id>/', methods=['GET', 'PUT', 'DELETE'])
 def desenvolvedor(id):
@@ -21,7 +21,7 @@ def desenvolvedor(id):
         try:
             response = desenvolvedores[id]
         except IndexError:
-            msg = 'Desenvolvedor de ID {} nao existe'.format(id
+            msg = 'Desenvolvedor de ID {} nao existe'.format(id)
             response = {'status': 'erro', 'mensagem': msg}
         except Exception:
             msg = 'Erro desconhecido, Procure o administrador!'
@@ -42,6 +42,8 @@ def desenvolvedor(id):
 def lista_desenvolvedores():
     if request.method == 'POST':
         dados = json.loads(request.data)
+        posicao = len(desenvolvedores)
+        dados['id'] = posicao
         desenvolvedores.append(dados)
         return jsonify({'status': 'sucesso', 'mensagem': 'Registro inserido'})
     elif request.method == 'GET':
